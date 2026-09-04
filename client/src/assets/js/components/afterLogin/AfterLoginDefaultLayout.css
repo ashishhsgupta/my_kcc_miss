@@ -1,0 +1,58 @@
+.menu-toggle-btn {
+  top: 10px;
+  left: calc(25% - 15px);
+  z-index: 1000;
+  width: 30px;
+  height: 35px;
+  padding: 0;
+}
+
+@media (min-width: 992px) {
+  .menu-toggle-btn {
+    left: calc(16.6667% - 15px);
+  }
+}
+
+.status-card {
+  height: 220px;
+  width: 100%;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  /* color: white; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.status-title {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.status-count {
+  font-size: 32px;
+  font-weight: 700;
+  margin-top: 5px;
+}
+
+.approved {
+  background: linear-gradient(135deg, #2e5f22, #97df7f);
+  border: 3px solid rgb(236, 184, 106);
+}
+
+.submitted {
+ background: linear-gradient(135deg, #0367a5, #c7b7da);
+ border: 3px solid rgb(205, 181, 228);
+}
+
+.draft {
+  background: linear-gradient(135deg, #8d9c03, #bbf066);
+  border: 3px solid rgb(84, 168, 5);
+}
+
+.rejected {
+  background: linear-gradient(135deg, hsla(0, 79%, 60%, 0.925), rgb(170, 45, 45));
+  border: 3px solid rgba(187, 61, 56, 0.774);
+}

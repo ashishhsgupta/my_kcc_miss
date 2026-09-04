@@ -1,0 +1,25 @@
+.menulist-items{
+    background-color:#1d1939;
+}
+.menulist-items .nav-link{
+    color: white !important;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    margin-bottom: 8px;
+}
+.menulist-items .nav-link:hover{
+    background-color: #363b88;
+    color: white !important;
+}
+.menulist-items .nav-link i {
+  margin-right: 10px;
+
+}
+.active-menu{
+    background-color: #836de6;
+    color: white;
+    /* border-radius: 8px; */
+}
+.active-menu i{
+    color: white;
+}

@@ -1,0 +1,15 @@
+export const BUTTON_TYPE = {
+    HYPER_LINK_RED_BTN : "HyperLinkRedBtn",
+    HYPER_LINK_GREEN_BTN : "HyperLinkGreenBtn",
+    HYPER_LINK_PURPLE_BTN : "HyperLinkPurpleBtn",
+    HYPER_LINK_ORANGE_BTN : "HyperLinkOrangeBtn",
+    HYPER_LINK_BLUE_BTN : "HyperLinkBlueBtn",
+    HYPER_LINK_DARK_BTN : "HyperLinkDarkBtn",
+    HYPER_LINK_BLACK_BTN : "HyperLinkBlackBtn",
+    RED_BTN : "RED_BTN",
+    GREEN_BTN : "GREEN_BTN",
+    ORANGE_BTN : "ORANGE_BTN",
+    PURPLE_BTN : "PURPLE_BTN",
+    DARK_BTN : "DARK_BTN",
+    BACK_BTN:"BACK_BTN",
+};

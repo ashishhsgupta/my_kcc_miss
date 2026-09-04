@@ -1,0 +1,35 @@
+.genGreenBtn {
+  background-color: #198754;
+  color: white;
+  border: none;
+}
+.genGreenBtn:hover {
+  background-color: #146c43;
+  color: white;
+}
+.genRedBtn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+}
+.genRedBtn:hover {
+  background-color: #b02a37;
+  color: white;
+}
+.genPurpleBtn {
+  background-color: #0b011d;
+  color: white;
+  border: none;
+}
+.genPurpleBtn:hover {
+  background-color: #230457;
+  color: white;
+}
+.genBackBtn{
+  background-color: rgb(241, 191, 191);
+  color: black;
+}
+.genBackBtn:hover{
+  background-color: rgb(235, 224, 224);
+  color: black;
+}
