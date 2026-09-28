@@ -24,4 +24,10 @@ export const VALIDATION_MSG = {
     villageValidation:"Select the village name!",
     addressValidation:"Enter the residential address!",
     pinCodeValidation:"Enter the pin code!",
+    bankValidation:"Select bank name!",
+    branchValidation:"Select branch name!",
+    accountNumber:"Enter Account number!",
+    accountNumberLength:"Minimum 8 characters!",
+    confirmAccountNumber:"Account number must be matched!",
+    confirmAccountRequire:"Confirm account number requires!",
 }

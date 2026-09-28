@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from "react";
+import React, { useReducer } from "react";
 import { Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { GenericInput } from "../../actions/GenericInput";
@@ -6,6 +6,8 @@ import { formReducer, initialState } from "../../reducers/RegistrationReducer";
 import { GenericButton } from "../buttons/GenericButton";
 import { BUTTON_TYPE } from "../buttons/Constant";
 import {
+  BankValidation,
+  BranchValidation,
   ConfirmPasswordValidation,
   EmailValidation,
   MobileValidation,
@@ -15,11 +17,15 @@ import {
 } from "../validations/Validations";
 import { loginUser, registerUser } from "../../services/UserServices.js";
 import { DASHBOARD_PATH } from "../../globalRouters/routers/RouterConstant.jsx";
+import { getBanksInfo } from "../../globalFunctions/getBank.jsx";
+import { getBranchInfo } from "../../globalFunctions/getBranch.jsx";
 
 const LoginForm = ({ onRegistrationSuccess, isLoginMode, onModeChange }) => {
   const [state, dispatch] = useReducer(formReducer, initialState);
   const { form, errors } = state;
   const navigate = useNavigate("");
+  const bankOptions = getBanksInfo();
+  const branchOptions = getBranchInfo(form.bankId);
 
   const validationForm = (form) => {
     if (isLoginMode) {
@@ -33,6 +39,8 @@ const LoginForm = ({ onRegistrationSuccess, isLoginMode, onModeChange }) => {
       email: EmailValidation(form.email),
       mobile: MobileValidation(form.mobile),
       role: RoleValidation(form.role),
+      bankId: BankValidation(form.bankId),
+      branchId: BranchValidation(form.branchId),
       password: PasswordValidation(form.password),
       confirmPassword: ConfirmPasswordValidation(
         form.password,
@@ -42,6 +50,7 @@ const LoginForm = ({ onRegistrationSuccess, isLoginMode, onModeChange }) => {
   };
 
   const roles = [
+    { value: "HQ", label: "HQ" },
     { value: "admin", label: "Admin" },
     { value: "user", label: "User" },
   ];
@@ -53,7 +62,7 @@ const LoginForm = ({ onRegistrationSuccess, isLoginMode, onModeChange }) => {
     }
     dispatch({
       type: "CHANGE_INPUT",
-      payload: {name, value },
+      payload: { name, value },
     });
   };
 
@@ -70,16 +79,17 @@ const LoginForm = ({ onRegistrationSuccess, isLoginMode, onModeChange }) => {
     try {
       if (isLoginMode) {
         const response = await loginUser(form);
-        localStorage.setItem("user", JSON.stringify(response.data))
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
         alert(response.data.message || "Login successfully!");
         navigate(DASHBOARD_PATH);
       } else {
         const response = await registerUser(form);
-        if(response.data?.data){
-        localStorage.setItem("registerUser", JSON.stringify(response.data));
+        if (response.data?.data) {
+          localStorage.setItem("registerUser", JSON.stringify(response.data));
         }
-        
-        alert(response.data.message || "Registration successfully!");
+
+        alert(response.data?.message || "Registration successfully!");
         onRegistrationSuccess();
       }
     } catch (err) {
@@ -93,7 +103,7 @@ const LoginForm = ({ onRegistrationSuccess, isLoginMode, onModeChange }) => {
         <Row md={12}>
           {!isLoginMode && (
             <>
-              <Col>
+              <Col md={12}>
                 <GenericInput
                   label="Name"
                   name="name"
@@ -125,8 +135,8 @@ const LoginForm = ({ onRegistrationSuccess, isLoginMode, onModeChange }) => {
               name="mobile"
               value={form.mobile}
               onChange={handleChange}
-              maxLength={name === "mobile" ? 10 : undefined}
-              inputMode={name === "mobile" ? "numeric" : undefined}
+              maxLength={10}
+              inputMode="numeric"
               error={errors.mobile}
               placeholder="Enter mobile number"
               required={true}
@@ -134,7 +144,7 @@ const LoginForm = ({ onRegistrationSuccess, isLoginMode, onModeChange }) => {
           </Col>
           {!isLoginMode && (
             <>
-              <Col>
+              <Col md={12}>
                 <GenericInput
                   label="Role"
                   type="select"
@@ -143,6 +153,30 @@ const LoginForm = ({ onRegistrationSuccess, isLoginMode, onModeChange }) => {
                   onChange={handleChange}
                   error={errors.role}
                   options={roles}
+                  required={true}
+                />
+              </Col>
+              <Col md={12}>
+                <GenericInput
+                  label="Bank Name"
+                  type="select"
+                  name="bankId"
+                  value={form.bankId}
+                  onChange={handleChange}
+                  errors={errors.bankId}
+                  options={bankOptions}
+                  required={true}
+                />
+              </Col>
+              <Col md={12}>
+                <GenericInput
+                  label="Branch Name"
+                  type="select"
+                  name="branchId"
+                  value={form.branchId}
+                  onChange={handleChange}
+                  errors={errors.branchId}
+                  options={branchOptions}
                   required={true}
                 />
               </Col>

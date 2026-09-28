@@ -2,7 +2,7 @@ import { REJEX } from "../utils/rejex.js";
 import { ROLE, ROLE_FLAG } from "../utils/roles.js";
 import { VALIDATION_MSG } from "../constants/messageConstant.js";
 export const validateUser = (user, isLoginMode = false) => {
-  const { name, email, mobile, role, password, confirmPassword } = user;
+  const { name, email, mobile, role, bankId,branchId, password, confirmPassword } = user;
 
   if (!mobile || !REJEX.MOBILE.test(mobile)) {
     throw new Error(VALIDATION_MSG.mobile);
@@ -21,11 +21,16 @@ export const validateUser = (user, isLoginMode = false) => {
     throw new Error(VALIDATION_MSG.email);
   }
 
-  const roleFlag = ROLE_FLAG[role.toLowerCase()];
+  const roleFlag = ROLE_FLAG[role];
   if (!roleFlag) {
     throw new Error(VALIDATION_MSG.role);
   }
-
+ if(!bankId || !REJEX.BANK.test(String(bankId))){
+  throw new Error(VALIDATION_MSG.bankName)
+ }
+ if(!branchId || !REJEX.BRANCH.test(String(branchId))){
+  throw new Error(VALIDATION_MSG.branchName)
+ }
   if (!REJEX.PASSWORD.test(password)) {
     throw new Error(VALIDATION_MSG.rejexPassword);
   }

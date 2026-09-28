@@ -8,7 +8,9 @@ export const initialState = {
       password: "",
       confirmPassword: "",
       financialYear:"",
-      aadharNumber:""
+      aadharNumber:"",
+      bankId:"",
+      branchId:"",
     },
     errors: {
       name:"",
@@ -18,7 +20,9 @@ export const initialState = {
       password:"",
       confirmPassword:"",
       financialYear:"",
-      aadharNumber:""
+      aadharNumber:"",
+      bankId:"",
+      branchId:"",
     },
   };
 
@@ -32,7 +36,7 @@ export const formReducer = (state, action) => {
           [action.payload.name]: action.payload.value,
         },
         errors: {
-          ...state.error,
+          ...state.errors,
           [action.payload.name]: "",
         },
       };

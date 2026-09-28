@@ -11,7 +11,12 @@ export const getAPI = async(url)=> {
 
 export const postAPI = async(url, data)=> {
     try{
-      const response = await axios.post(url, data);
+      const token = localStorage.getItem("token");
+      const response = await axios.post(url, data,{
+        headers:{
+          Authorization:`Bearer ${token}`
+        }
+      });
       return response.data;
     }catch(error){
         throw error;

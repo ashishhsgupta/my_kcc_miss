@@ -15,6 +15,5 @@ const GlobalContextProvider = ({children})=> {
          {children}
         </GlobalContext.Provider>
     )
-    console.log("Ashish",GlobalLanguage);
 }
 export default GlobalContextProvider;

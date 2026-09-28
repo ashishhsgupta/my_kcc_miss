@@ -24,7 +24,9 @@ export const GlobalInitialState = {
       address:"",
       pinCode:"",
       bank:"",
-      branch:""
+      branch:"",
+      accountNumber:"",
+      confirmAccountNumber:""
     },
     errors: {
       name:"",
@@ -51,6 +53,8 @@ export const GlobalInitialState = {
       address:"",
       pinCode:"",
       bank:"",
-      branch:""
+      branch:"",
+      accountNumber:"",
+      confirmAccountNumber:""
     },
 }

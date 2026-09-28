@@ -1,26 +1,15 @@
-/* .custom-tabs .nav-link {
-  color: black !important;
-}
-.custom-tabs .nav-link.active {
-  color: #fff !important;
-  background-color: #4c5daa;
-  border-bottom: 4px solid rgb(32, 32, 75);
-} */
 .custom-tabs .nav-link.disabled {
   opacity: 0.45;
-  color: black !important;
-  background-color: #a2b3c4 !important;
   cursor: not-allowed;
 }
 .custom-tabs .nav-link.disabled:hover {
   opacity: 0.45 !important;
-  color: black !important;
   background-color: #aaafb4 !important;
   box-shadow: none !important;
   transform: none !important;
 }
 .custom-tabs .nav-link {
-  color: #212529!Important;
+  /* color: #212529!Important; */
   transition: all 0.2s ease;
 }
 .custom-tabs .nav-link.active {

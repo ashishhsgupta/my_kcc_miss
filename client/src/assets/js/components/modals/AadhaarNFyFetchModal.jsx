@@ -8,6 +8,7 @@ import { BUTTON_TYPE } from "../buttons/Constant";
 import { AadharValidation, FinancialYears } from "../validations/Validations";
 import { LOAN_APPLICATION_FORM_PATH } from "../../globalRouters/routers/RouterConstant";
 import { useNavigate } from "react-router-dom";
+import { useFYInfo } from "../../globalFunctions/getFYInfo";
 
 export const AadhaarNFyFetchModal = (props) => {
   const navigate = useNavigate();
@@ -16,16 +17,13 @@ export const AadhaarNFyFetchModal = (props) => {
   const [state, dispatch] = useReducer(aadharReducer, initialState);
   const { form, errors } = state;
 
+
   const validationForm = (form) => {
     return {
       aadharNumber: AadharValidation(form.aadharNumber),
       financialYear: FinancialYears(form.financialYear),
     };
   };
-  const financialYears = [
-    { value: "2024-25", label: "2024-25" },
-    { value: "2025-26", label: "2025-26" },
-  ];
   const handleChange = (e) => {
     let { name, value } = e.target;
     if (name === "aadharNumber") {
@@ -45,11 +43,17 @@ export const AadhaarNFyFetchModal = (props) => {
       return;
     }
     alert("aadhar fetched successfully!");
+     navigate(LOAN_APPLICATION_FORM_PATH,{
+      state:{
+        financialYear:form.financialYear,
+        aadharNumber:form.aadharNumber,
+      },
+     });
     dispatch({type:"RESET_FORM"})
      onHide();
-    navigate(LOAN_APPLICATION_FORM_PATH);
-  
   };
+  const fyOptions  = useFYInfo();
+
   return (
     <GlobalModal
       show={show}
@@ -67,7 +71,7 @@ export const AadhaarNFyFetchModal = (props) => {
                 value={form.financialYear}
                 onChange={handleChange}
                 error={state.errors.financialYear}
-                options={financialYears}
+                options={fyOptions}
                 required={true}
               />
             </Col>
@@ -105,7 +109,7 @@ export const aadharReducer = (state, action) => {
           [action.payload.name]: action.payload.value,
         },
         errors: {
-          ...state.error,
+          ...state.errors,
           [action.payload.name]: "",
         },
       };

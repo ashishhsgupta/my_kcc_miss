@@ -8,5 +8,7 @@ export const VALIDATION_MSG = {
     rejexPassword:"Password should be match/complex.",
     confirmPassword:"Confirm password is required!",
     rejexConfirmPassword:"Invalid Confirm password format!",
-    invalidPassword:"Password do not match."
+    invalidPassword:"Password do not match.",
+    bankName:"Bank name is required!",
+    branchName:"Branch name is required!",
 }

@@ -4,20 +4,39 @@ import "./AfterLoginDefaultLayout.css";
 import { GenericButton } from "../buttons/GenericButton";
 import { BUTTON_TYPE } from "../buttons/Constant";
 import { GenericInput } from "../../actions/GenericInput";
+import { useEffect } from "react";
+import { useState } from "react";
+import { useFYInfo } from "../../globalFunctions/getFYInfo";
 
 const DashboardLayout = () => {
-  const FYs = [
-    { value: "25-26", label: "25-26" },
-    { value: "24-25", label: "24-25" },
-  ];
+  const [bankDetails, setBankDetails] = useState(null);
+  const fyOptions = useFYInfo();
+
   const handleApprove = () => {
     console.log("approve btn");
   };
+    useEffect(() => {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser && storedUser !== "undefined") {
+        try {
+          const userData = JSON.parse(storedUser);
+          setBankDetails(userData);
+        } catch (err) {
+          console.error("Invalid user data:", err);
+          localStorage.removeItem("user");
+        }
+      }
+    }, []);
+
   return (
     <>
       <div className="d-flex align-items-center">
         <h4 className="mb-0">
-          Welcome to <i>Interest Subvention Scheme</i>
+          {bankDetails && (
+            <>
+            <span>Welcome {bankDetails.bankName}-<small>({bankDetails.branchName}-{bankDetails.branchId})</small></span>
+          </>
+          )}
         </h4>
 
         <div className="ms-auto">
@@ -25,7 +44,7 @@ const DashboardLayout = () => {
             label="Financial Year:"
             type="select"
             name="FY"
-            options={FYs}
+            options={fyOptions}
           />
         </div>
       </div>

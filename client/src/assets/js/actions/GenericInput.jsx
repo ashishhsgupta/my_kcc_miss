@@ -1,7 +1,7 @@
 export const GenericInput = (props) => {
   const {
     label,
-    type = "text",
+    type,
     name,
     value,
     onChange,
@@ -15,7 +15,7 @@ export const GenericInput = (props) => {
 
   return (
     <div className="mb-3">
-      <label className="form-label fw-bold">
+      <label className="form-label fw-semibold">
         {label}
         {required && <span className="text-danger ms-1">*</span>}
       </label>

@@ -1,14 +1,39 @@
-
 import { Col, Row } from "react-bootstrap";
 import { GenericInput } from "../../../actions/GenericInput";
-import { FARMER_CATEGORY, FARMER_TYPE, GENDER_OPTIONS, PRIMARY_OCCUPATION, RELATIVE_TYPE, SOCIAL_CATEGORIES } from "../../../actions/loanActions/GlobalLoanOptions";
+import {
+  FARMER_CATEGORY,
+  FARMER_TYPE,
+  GENDER_OPTIONS,
+  PRIMARY_OCCUPATION,
+  RELATIVE_TYPE,
+  SOCIAL_CATEGORIES,
+} from "../../../actions/loanActions/GlobalLoanOptions";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
-const FarmerPersonalDetails = ({form,errors,dispatch}) => {
- 
+const FarmerPersonalDetails = ({ form, errors, dispatch }) => {
+  const location = useLocation();
+  const aadharNumber = location.state?.aadharNumber || "";
+
+  useEffect(() => {
+    if (aadharNumber && !form.aadharNumber) {
+      dispatch({
+        type: "CHANGE_INPUT",
+        payload: {
+          name: "aadharNumber",
+          value: aadharNumber,
+        },
+      });
+    }
+  }, [aadharNumber, form.aadharNumber, dispatch]);
+
   const handleChange = (e) => {
-    let {name,value} = e.target;
-    dispatch({type:"CHANGE_INPUT", payload:{name,value}})
-  }
+    let { name, value } = e.target;
+    if (name === "aadharNumber") {
+      value = value.replace(/\D/g, "").slice(0, 12);
+    }
+    dispatch({ type: "CHANGE_INPUT", payload: { name, value } });
+  };
   return (
     <Row md={12}>
       <Col md={4}>

@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { Tab, Tabs } from "react-bootstrap";
-import '../loanApplication/loanApplicationStyle.css';
+import "../loanApplication/loanApplicationStyle.css";
 import BasicNResiden from "./ApplicationDetails/BasicNResiden";
 import AccountDetails from "./AccountDetails/AccountDetails";
+import { FinancialDetails } from "./AccountDetails/FinancialDetails";
+import { useLocation } from "react-router-dom";
 
 const LoanApplication = () => {
   const [activeTab, setActiveTab] = useState("basic-details");
   const [completedTabs, setCompletedTabs] = useState(["basic-details"]);
+  const location = useLocation();
+  const finanacialYear = location.state?.financialYear || "";
 
   const tabList = [
     "basic-details",
@@ -31,16 +35,16 @@ const LoanApplication = () => {
     setActiveTab(nextTab);
   };
   const handleTabChange = (key) => {
-    if (!completedTabs.includes(key)) {
-      return;
-    }
+    // if (!completedTabs.includes(key)) {
+    //   return;
+    // }
     setActiveTab(key);
   };
 
   return (
     <div className="border rounded m-3">
       <div className="p-2">
-        <h5>Application Form (FY - 2024-25)</h5>
+        <h5>Application Form: {finanacialYear}</h5>
       </div>
       <Tabs
         activeKey={activeTab}
@@ -55,12 +59,18 @@ const LoanApplication = () => {
         <Tab
           eventKey="account-details"
           title="Account Details"
-          disabled={!completedTabs.includes("account-details")}
+          // disabled={!completedTabs.includes("account-details")}
         >
-          <AccountDetails onSaveAndContinue={()=> handleSaveAndContinue("account-details")}/>
+          <AccountDetails
+            onSaveAndContinue={() => handleSaveAndContinue("account-details")}
+          />
         </Tab>
-        <Tab eventKey="financial-details" title="Financial Details">
-          <h4>financial form</h4>
+        <Tab
+          eventKey="financial-details"
+          title="Financial Details"
+          // disabled={!completedTabs.includes("financial-details")}
+        >
+          <FinancialDetails onSaveAndContinue={()=> handleSaveAndContinue("financial-details")}/>
         </Tab>
         <Tab eventKey="activity-details" title="Activities (Multi-Select)">
           <h4>activity form</h4>

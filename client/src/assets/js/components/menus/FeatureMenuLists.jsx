@@ -22,13 +22,12 @@ const FeatureMenuLists = (props) => {
       break;
       case "claim-application":navigate(CLAIM_APPLICATION_PATH)
       break;
-      case "claim-release-summary":navigate(CLAIM_RELEASE_SUMMARy_PATH)
+      case "claim-release-summary":navigate(CLAIM_RELEASE_SUMMARY_PATH)
       default : break;
     }
   }
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
-    console.log("Store user:", storedUser);
     if (storedUser && storedUser !== "undefined") {
       try {
         const userData = JSON.parse(storedUser);

@@ -40,13 +40,12 @@ export const FinancialYears = (value) => {
 };
 
 export const AadharValidation = (value) => {
-  if (!value) {
-    return VALIDATION_MSG.aadharNumber;
-  } else if (value.length !== 12) {
+  if (!value || !/^\d{12}$/.test(value)) {
     return VALIDATION_MSG.aadharNumber;
   }
   return "";
 };
+
 export const DOBValidation = (value) => {
   if (!value) return "Date of birth is required!";
   const regex = /^(0[1-9]|[12]\d|3[01])\/(0[1-9]|1[0-2])\/(\d{4})$/;
@@ -140,5 +139,24 @@ export const PinCodeValidation = (value) => {
   if (!value || !pinCodeRegex.test(value)) {
     return VALIDATION_MSG.pinCodeValidation;
   }
+  return "";
+};
+export const BankValidation = (value) => {
+  if (!value) return VALIDATION_MSG.bankValidation;
+  return "";
+};
+export const BranchValidation = (value) => {
+  if (!value) return VALIDATION_MSG.branchValidation;
+  return "";
+};
+export const AccountValidation = (value) => {
+  if (!value) return VALIDATION_MSG.accountNumber;
+  if (value.length < 8) return VALIDATION_MSG.accountNumberLength;
+  return "";
+};
+
+export const ConfirmAccountValidation = (account, confirmAccount) => {
+  if (!confirmAccount) return VALIDATION_MSG.confirmAccountRequire;
+  if (account !== confirmAccount) return VALIDATION_MSG.confirmAccountNumber;
   return "";
 };
