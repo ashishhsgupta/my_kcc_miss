@@ -15,9 +15,11 @@ const BasicNResiden = ({ onSaveAndContinue }) => {
   );
   const { form, errors } = state;
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = FarmerPersonalDetailsValidation(form);
+    console.log("form submitted:", form);
+    console.log("validation errors:", validationErrors);
     const hasError = Object.values(validationErrors).some(
       (error) => error !== "",
     );
@@ -25,15 +27,21 @@ const BasicNResiden = ({ onSaveAndContinue }) => {
       dispatch({ type: "SET_ERRORS", payload: validationErrors });
       return;
     }
-    try{
-     const response = await basicLoanServices(form);
-     alert(response.data?.message|| "Application Details saved successfully!");
-       onSaveAndContinue();
-    }catch(error){
-      alert(error.response?.data?.message || error.message || "Failed to save application details!")
+    try {
+      const response = await basicLoanServices(form);
+      alert(
+        response.data?.message || "Application Details saved successfully!",
+      );
+      onSaveAndContinue();
+    } catch (error) {
+      alert(
+        error.response?.data?.message ||
+          error.message ||
+          "Failed to save application details!",
+      );
     }
   };
-  
+
   return (
     <form onSubmit={handleSubmit}>
       <div className="m-3 p-2">

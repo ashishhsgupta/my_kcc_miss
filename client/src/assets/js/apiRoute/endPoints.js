@@ -9,6 +9,7 @@ export const API = {
   ACCOUNT_DETAILS_ENDPOINT:`${BASE_URL}/basicAccountDetails`,
   BANK:`${BASE_URL}/banks`,
   BRANCHES:(bankId)=> `${BASE_URL}/branches/${bankId}/branches`,
+  STATE:`${BASE_URL}/states`,
   
 }
 

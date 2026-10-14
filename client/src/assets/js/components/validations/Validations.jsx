@@ -141,6 +141,10 @@ export const PinCodeValidation = (value) => {
   }
   return "";
 };
+export const StateValidation=(value)=>{
+  if(!value) return VALIDATION_MSG.stateNameValidation;
+  return;
+}
 export const BankValidation = (value) => {
   if (!value) return VALIDATION_MSG.bankValidation;
   return "";

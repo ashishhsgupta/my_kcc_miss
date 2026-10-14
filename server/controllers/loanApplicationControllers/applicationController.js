@@ -3,7 +3,7 @@ import { applicationServices } from "../../services/loanApplicationServices/Loan
 export const applicationController = async (req, res) => {
   try {
     const applicationData = {
-      ...req.body, creatorId:req.user.id,
+      ...req.body, creator_id:req.user.id,
     }
    
     const result = await applicationServices(applicationData);

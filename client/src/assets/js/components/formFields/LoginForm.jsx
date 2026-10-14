@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import { useReducer } from "react";
 import { Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { GenericInput } from "../../actions/GenericInput";
@@ -9,21 +9,26 @@ import {
   BankValidation,
   BranchValidation,
   ConfirmPasswordValidation,
+  DistrictValidation,
   EmailValidation,
   MobileValidation,
   NameValidation,
   PasswordValidation,
   RoleValidation,
+  StateNameValidation,
 } from "../validations/Validations";
 import { loginUser, registerUser } from "../../services/UserServices.js";
 import { DASHBOARD_PATH } from "../../globalRouters/routers/RouterConstant.jsx";
 import { getBanksInfo } from "../../globalFunctions/getBank.jsx";
 import { getBranchInfo } from "../../globalFunctions/getBranch.jsx";
+import { getStateInfo } from "../../globalFunctions/getState.jsx";
 
 const LoginForm = ({ onRegistrationSuccess, isLoginMode, onModeChange }) => {
   const [state, dispatch] = useReducer(formReducer, initialState);
   const { form, errors } = state;
   const navigate = useNavigate("");
+  const stateOptions = getStateInfo();
+  // const districtOptions = gerDistrictInfo();
   const bankOptions = getBanksInfo();
   const branchOptions = getBranchInfo(form.bankId);
 
@@ -39,6 +44,8 @@ const LoginForm = ({ onRegistrationSuccess, isLoginMode, onModeChange }) => {
       email: EmailValidation(form.email),
       mobile: MobileValidation(form.mobile),
       role: RoleValidation(form.role),
+      stateId:StateNameValidation(form.stateId),
+      districtId:DistrictValidation(form.districtId),
       bankId: BankValidation(form.bankId),
       branchId: BranchValidation(form.branchId),
       password: PasswordValidation(form.password),
@@ -60,6 +67,8 @@ const LoginForm = ({ onRegistrationSuccess, isLoginMode, onModeChange }) => {
     if (name === "mobile") {
       value = value.replace(/\D/g, "").slice(0, 10);
     }
+      console.log("input value:", value)
+    console.log("input name:", name)
     dispatch({
       type: "CHANGE_INPUT",
       payload: { name, value },
@@ -95,6 +104,9 @@ const LoginForm = ({ onRegistrationSuccess, isLoginMode, onModeChange }) => {
     } catch (err) {
       alert(err.response?.data?.message || "Registration failed!");
     }
+    console.log("role value:", JSON.stringify(form.role));
+console.log("role type:", typeof form.role);
+console.log("role validation:", RoleValidation(form.role));
   };
 
   return (
@@ -153,6 +165,30 @@ const LoginForm = ({ onRegistrationSuccess, isLoginMode, onModeChange }) => {
                   onChange={handleChange}
                   error={errors.role}
                   options={roles}
+                  required={true}
+                />
+              </Col>
+              <Col md={12}>
+                <GenericInput
+                  label="State Name"
+                  type="select"
+                  name="stateId"
+                  value={form.stateId}
+                  onChange={handleChange}
+                  errors={errors.stateId}
+                  options={stateOptions}
+                  required={true}
+                />
+              </Col>
+              <Col md={12}>
+                <GenericInput
+                  label="District Name"
+                  type="select"
+                  name="districtId"
+                  value={form.districtId}
+                  onChange={handleChange}
+                  errors={errors.districtId}
+                  // options={districtOptions}
                   required={true}
                 />
               </Col>

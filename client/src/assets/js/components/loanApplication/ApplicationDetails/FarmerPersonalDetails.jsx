@@ -1,4 +1,4 @@
-import { Col, Row } from "react-bootstrap";
+import { Button, Col, InputGroup, Row } from "react-bootstrap";
 import { GenericInput } from "../../../actions/GenericInput";
 import {
   FARMER_CATEGORY,
@@ -9,9 +9,10 @@ import {
   SOCIAL_CATEGORIES,
 } from "../../../actions/loanActions/GlobalLoanOptions";
 import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useReducer, useState } from "react";
 
-const FarmerPersonalDetails = ({ form, errors, dispatch }) => {
+const FarmerPersonalDetails = ({form, errors, dispatch}) => {
+  const [isAadharVerified, setIsAadharVerified] = useState(false);
   const location = useLocation();
   const aadharNumber = location.state?.aadharNumber || "";
 
@@ -34,6 +35,38 @@ const FarmerPersonalDetails = ({ form, errors, dispatch }) => {
     }
     dispatch({ type: "CHANGE_INPUT", payload: { name, value } });
   };
+
+  const handleAadharVerify = () => {
+    const aadhar = String(form.aadharNumber || "").replace(/\D/g, "");
+    const farmerName = String(form.name || "").trim();
+    const validationErrors = {};
+    if (aadhar.length !== 12) {
+      validationErrors.aadharNumber = "Enter valid Aadhar number.";
+    }
+    if (!farmerName) {
+      validationErrors.name = "Enter the farmer name and reverify it.";
+    }
+    if (Object.keys(validationErrors).length > 0) {
+      dispatch({
+        type: "SET_ERRORS",
+        payload: validationErrors,
+      });
+      return;
+    }
+    // Store cleaned Aadhaar
+    dispatch({
+      type: "CHANGE_INPUT",
+      payload: {
+        name: "aadharNumber",
+        value: aadhar,
+      },
+    });
+    dispatch({
+      type: "SET_ERRORS",
+      payload: {},
+    });
+    setIsAadharVerified(true);
+  };
   return (
     <Row md={12}>
       <Col md={4}>
@@ -45,18 +78,43 @@ const FarmerPersonalDetails = ({ form, errors, dispatch }) => {
           error={errors.name}
           placeholder="Enter Beneficiary name"
           required={true}
+          readOnly={isAadharVerified}
         />
       </Col>
-      <Col md={4}>
-        <GenericInput
-          label="Aadhar Number"
-          name="aadharNumber"
-          value={form.aadharNumber}
-          onChange={handleChange}
-          error={errors.aadharNumber}
-          placeholder="Enter Aadhar no."
-          required={true}
-        />
+      <Col md={3}>
+        <div className="d-flex">
+          <div className="flex-grow-1">
+            <GenericInput
+              label="Aadhar Number"
+              name="aadharNumber"
+              value={form.aadharNumber}
+              onChange={handleChange}
+              error={errors.aadharNumber}
+              placeholder="Enter Aadhar no."
+              required={true}
+              readOnly={isAadharVerified}
+              className=""
+            />
+          </div>
+
+          {!isAadharVerified ? (
+            <Button
+              variant="outline-primary"
+              size="sm"
+              className=""
+              onClick={handleAadharVerify}
+              style={{ marginTop: "32px", height: "38px" }}
+            >
+              Reverify
+            </Button>
+          ) : (
+            <div className="" style={{ marginTop: "32px", height: "38px" }}>
+              <InputGroup.Text className="text-success fw-bold">
+                ✓
+              </InputGroup.Text>
+            </div>
+          )}
+        </div>
       </Col>
       <Col md={4}>
         <GenericInput

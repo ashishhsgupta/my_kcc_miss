@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import GlobalModal from "./GlobalModal";
-import { Col, Row } from "react-bootstrap";
-import { GenericButton } from "../buttons/GenericButton";
-import { BUTTON_TYPE } from "../buttons/Constant";
 import LoginForm from "../formFields/LoginForm";
 
 const LoginModal = React.memo((props) => {
-  const { show, onCloseBtn, onLoginBtn } = props;
+  const { show, onCloseBtn } = props;
   const [isLoginMode, setIsLoginMode] = useState(true);
 
   const handleModeChange = () => {
@@ -20,8 +17,8 @@ const LoginModal = React.memo((props) => {
         title={
           isLoginMode ? "Login with registered mobile number" : "Registration"
         }
-        btnName={isLoginMode ? "Login" : "Submit"}
-        btnCallBack={onLoginBtn}
+        // btnName={isLoginMode ? "Login" : "Submit"}
+        // btnCallBack={onLoginBtn}
         onCloseBtn="Cancel"
         onHide={onCloseBtn}
       >

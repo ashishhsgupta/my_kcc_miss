@@ -1,4 +1,5 @@
 export const VALIDATION_MSG = {
+
     name:"Enter Name!",
     nameFormat:"Only alphabets allowed!",
     email:"Email ID requires!",

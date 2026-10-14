@@ -11,6 +11,7 @@ export const GenericInput = (props) => {
     required,
     maxLength,
     inputMode,
+    readOnly,
   } = props;
 
   return (
@@ -45,6 +46,7 @@ export const GenericInput = (props) => {
           placeholder={placeholder}
           maxLength={maxLength}
           inputMode={inputMode}
+          readOnly={readOnly}
           className={`form-control bg-light ${error ? "is-invalid" : ""}`}
         />
       )}

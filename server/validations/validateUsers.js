@@ -2,7 +2,7 @@ import { REJEX } from "../utils/rejex.js";
 import { ROLE, ROLE_FLAG } from "../utils/roles.js";
 import { VALIDATION_MSG } from "../constants/messageConstant.js";
 export const validateUser = (user, isLoginMode = false) => {
-  const { name, email, mobile, role, bankId,branchId, password, confirmPassword } = user;
+  const { name, email, mobile, role,stateId,districtId, bankId,branchId, password, confirmPassword } = user;
 
   if (!mobile || !REJEX.MOBILE.test(mobile)) {
     throw new Error(VALIDATION_MSG.mobile);
@@ -25,12 +25,24 @@ export const validateUser = (user, isLoginMode = false) => {
   if (!roleFlag) {
     throw new Error(VALIDATION_MSG.role);
   }
- if(!bankId || !REJEX.BANK.test(String(bankId))){
-  throw new Error(VALIDATION_MSG.bankName)
- }
- if(!branchId || !REJEX.BRANCH.test(String(branchId))){
-  throw new Error(VALIDATION_MSG.branchName)
- }
+  if(stateId === undefined || stateId === null || stateId === ""){
+    throw new Error("State is required!");
+  }
+  if(districtId === undefined || districtId === null || districtId === ""){
+    throw new Error ("District is required!");
+  }
+  if(bankId === undefined || bankId === null || bankId === ""){
+    throw new Error("Bank is required!");
+  }
+  if(branchId === undefined|| branchId === null || branchId === ""){
+    throw new Error("Branch is required!")
+  }
+//  if(!bankId || !REJEX.BANK.test(String(bankId))){
+//   throw new Error(VALIDATION_MSG.bankName)
+//  }
+//  if(!branchId || !REJEX.BRANCH.test(String(branchId))){
+//   throw new Error(VALIDATION_MSG.branchName)
+//  }
   if (!REJEX.PASSWORD.test(password)) {
     throw new Error(VALIDATION_MSG.rejexPassword);
   }
